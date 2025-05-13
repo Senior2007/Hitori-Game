@@ -1367,6 +1367,12 @@ gamewindow.o: ../../gamewindow.cpp ../../gamewindow.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QPushButton \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../hitorisolver.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h \
+		../../mainmenu.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QDialog \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qdialog.h \
 		ui_gamewindow.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QFile \
 		/opt/homebrew/lib/QtCore.framework/Headers/qfile.h \
@@ -1378,6 +1384,8 @@ gamewindow.o: ../../gamewindow.cpp ../../gamewindow.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/qrandom.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QGridLayout \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QScreen \
+		/opt/homebrew/lib/QtGui.framework/Headers/qscreen.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QDebug \
 		/opt/homebrew/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamewindow.o ../../gamewindow.cpp
@@ -1418,7 +1426,11 @@ mainmenu.o: ../../mainmenu.cpp ../../mainmenu.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		ui_mainmenu.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMessageBox \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qmessagebox.h
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QFile \
+		/opt/homebrew/lib/QtCore.framework/Headers/qfile.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QTextStream \
+		/opt/homebrew/lib/QtCore.framework/Headers/qtextstream.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainmenu.o ../../mainmenu.cpp
 
 mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \

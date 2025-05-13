@@ -13,38 +13,129 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>110</x>
      <y>170</y>
      <width>441</width>
-     <height>191</height>
+     <height>244</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Futura</family>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;              
+font: bold 16px &quot;Futura&quot;;      
+background-color: rgba(0,0,0, 200);  
+border-radius: 4px;    
+padding: 4px 8px; </string>
+      </property>
       <property name="text">
-       <string>                                                         Логин</string>
+       <string>                                 Логин</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="loginEdit"/>
+     <widget class="QLineEdit" name="loginEdit">
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    min-width: 80px;
+    padding: 6px;
+    font-size: 14px;
+}
+</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Futura</family>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;                    
+font: bold 16px &quot;Futura&quot;;      
+background-color: rgba(0,0,0, 200);  
+border-radius: 4px;    
+padding: 4px 8px; </string>
+      </property>
       <property name="text">
-       <string>                                                        Пароль</string>
+       <string>                                Пароль</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="passwordEdit"/>
+     <widget class="QLineEdit" name="passwordEdit">
+      <property name="font">
+       <font>
+        <pointsize>-1</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    min-width: 10px;
+    padding: 6px;
+    font-size: 14px;
+}
+</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QPushButton" name="loginButton">
+      <property name="font">
+       <font>
+        <family>Futura</family>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	font: &quot;Futura&quot;;   
+    background-color: #555555;
+    color: white;
+    border-radius: 8px;
+    padding: 6px 12px;
+    border: 2px solid #555555;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #444444;
+    border-color: #444444;
+}
+
+QPushButton:pressed {
+    background-color: #333333;
+    border-color: #333333;
+}
+</string>
+      </property>
       <property name="text">
        <string>Войти</string>
       </property>
@@ -52,6 +143,36 @@
     </item>
     <item>
      <widget class="QPushButton" name="registerButton">
+      <property name="font">
+       <font>
+        <family>Futura</family>
+        <pointsize>-1</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	font: &quot;Futura&quot;;
+    background-color: #555555;
+    color: white;
+    border-radius: 8px;
+    padding: 6px 12px;
+    border: 2px solid #555555;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #444444;
+    border-color: #444444;
+}
+
+QPushButton:pressed {
+    background-color: #333333;
+    border-color: #333333;
+}
+</string>
+      </property>
       <property name="text">
        <string>Зарегистрироваться</string>
       </property>

@@ -12,6 +12,8 @@ class MainMenu : public QDialog {
 public:
     explicit MainMenu(const QString &username, QWidget *parent = nullptr);
     ~MainMenu();
+    int getSelectedSize();
+    bool useUniqueBoards();
 
 private slots:
     void on_playButton_clicked();
@@ -19,6 +21,9 @@ private slots:
     void on_exitButton_clicked();
 
 private:
+    void resizeEvent(QResizeEvent *event) override;
+
     QString currentUsername;
+    QString formatTime(const QString &seconds);
     Ui::MainMenu *ui;
 };

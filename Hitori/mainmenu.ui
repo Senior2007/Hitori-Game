@@ -53,6 +53,28 @@
    </item>
    <item>
     <widget class="QPushButton" name="playButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	font: &quot;Futura&quot;;   
+    background-color: #555555;
+    color: white;
+    border-radius: 8px;
+    padding: 6px 12px;
+    border: 2px solid #555555;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #376130;
+    border-color: #376130;
+}
+
+QPushButton:pressed {
+    background-color: #333333;
+    border-color: #333333;
+}
+</string>
+     </property>
      <property name="text">
       <string>Играть</string>
      </property>
@@ -60,6 +82,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="uniqueCheckBox">
+     <property name="styleSheet">
+      <string notr="true">font: &quot;Futura&quot;;</string>
+     </property>
      <property name="text">
       <string>Только уникальные</string>
      </property>
@@ -80,6 +105,27 @@
    </item>
    <item>
     <widget class="QPushButton" name="statsButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	font: &quot;Futura&quot;;   
+    background-color: #555555;
+    color: white;
+    border-radius: 8px;
+    border: 2px solid #555555;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #444444;
+    border-color: #444444;
+}
+
+QPushButton:pressed {
+    background-color: #333333;
+    border-color: #333333;
+}
+</string>
+     </property>
      <property name="text">
       <string>Статистика</string>
      </property>
@@ -100,6 +146,27 @@
    </item>
    <item>
     <widget class="QPushButton" name="exitButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	font: &quot;Futura&quot;;   
+    background-color: #555555;
+    color: white;
+    border-radius: 8px;
+    border: 2px solid #555555;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #fc0330;
+    border-color: #fc0330;
+}
+
+QPushButton:pressed {
+    background-color: #333333;
+    border-color: #333333;
+}
+</string>
+     </property>
      <property name="text">
       <string>Выход</string>
      </property>

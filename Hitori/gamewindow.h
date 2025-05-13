@@ -31,6 +31,8 @@ private:
     int secondsElapsed;
     QPushButton *selectedCell;
 
+    void centerWindow();
+    void updateStatistics();
     bool loadBoard();
     void initBoardUI();
     void checkSolution();

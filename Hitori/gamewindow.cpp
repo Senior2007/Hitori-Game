@@ -1,11 +1,13 @@
 #include "gamewindow.h"
 #include "hitorisolver.h"
+#include "mainmenu.h"
 #include "ui_gamewindow.h"
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
 #include <QRandomGenerator>
 #include <QGridLayout>
+#include <QScreen>
 #include <QDebug>
 
 GameWindow::GameWindow(const QString& username, int size, bool useUnique, QWidget *parent) :
@@ -41,7 +43,18 @@ GameWindow::GameWindow(const QString& username, int size, bool useUnique, QWidge
         timer->start(1000);
         this->resize(200, 300);
 
+        QRect screenGeometry = QGuiApplication::primaryScreen()->availableGeometry();
+        int x = (screenGeometry.width() - width()) / 2;
+        int y = (screenGeometry.height() - height()) / 2;
+        move(x, y);
+
         connect(ui->surrenderButton, &QPushButton::clicked, this, &GameWindow::onSurrenderClicked);
+
+        int maxSize = boardSize * 50 + 80;
+        setMaximumSize(maxSize, maxSize);
+
+        show();
+        centerWindow();
     }
     catch (const std::exception& e) {
         QMessageBox::critical(this, "Ошибка", QString("Исключение при инициализации: %1").arg(e.what()));
@@ -59,6 +72,22 @@ GameWindow::~GameWindow()
         delete timer;
     }
     delete ui;
+}
+
+void GameWindow::centerWindow()
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeometry = screen->availableGeometry();
+        QRect windowGeometry = this->frameGeometry();
+        int x = (screenGeometry.width() - windowGeometry.width()) / 2;
+        int y = (screenGeometry.height() - windowGeometry.height()) / 2;
+        this->move(x, y);
+
+        //qDebug() << "Screen:" << screenGeometry.width() << "x" << screenGeometry.height();
+        //qDebug() << "Window:" << windowGeometry.width() << "x" << windowGeometry.height();
+        //qDebug() << "Move to:" << x << "," << y;
+    }
 }
 
 bool GameWindow::loadBoard()
@@ -225,8 +254,6 @@ void GameWindow::onSurrenderClicked()
         timer->stop();
     }
     showSolution();
-    QMessageBox::information(this, "Игра окончена", "Вы сдались! Вот правильное решение.");
-    close();
 }
 
 void GameWindow::checkSolution()
@@ -248,24 +275,146 @@ void GameWindow::checkSolution()
         }
     }
 
-    qDebug() << "Текущее решение игрока:";
-    for (const auto &row : solution) {
-        qDebug() << row;
-    }
-
     bool isSolved = HitoriSolver::SolveHitori(board, solution);
 
     if (isSolved) {
-        if (timer) {
-            timer->stop();
-        }
+        timer->stop();
+        updateStatistics();
         QMessageBox::information(this, "Победа!", "Вы решили головоломку!");
+        MainMenu *mainMenu = new MainMenu(username);
+        mainMenu->show();
         close();
     }
 }
 
+void GameWindow::updateStatistics()
+{
+    QString statsFilePath =
+        "/Users/senior/Desktop/BSUIR/ОАиП/Курсач/Hitori/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/statistics/"
+        + username + ".txt";
+    QFile statsFile(statsFilePath);
+
+    if (!statsFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qWarning() << "Failed to open stats file";
+        return;
+    }
+
+    QTextStream in(&statsFile);
+    QStringList stats;
+
+    for (int i = 0; i < 9; ++i) {
+        stats << in.readLine();
+    }
+
+    int totalSolved = stats[0].toInt() + 1;
+    stats[0] = QString::number(totalSolved);
+
+    int sizeIndex;
+    switch(boardSize) {
+    case 5: sizeIndex = 1; break;
+    case 10: sizeIndex = 3; break;
+    case 15: sizeIndex = 5; break;
+    case 20: sizeIndex = 7; break;
+    default: return;
+    }
+
+    int sizeSolved = stats[sizeIndex].toInt() + 1;
+    stats[sizeIndex] = QString::number(sizeSolved);
+
+    int currentTime = secondsElapsed;
+    int bestTime = stats[sizeIndex + 1].toInt();
+    if (bestTime == 0 || currentTime < bestTime) {
+        stats[sizeIndex + 1] = QString::number(currentTime);
+    }
+
+    statsFile.resize(0);
+    QTextStream out(&statsFile);
+    for (const QString &line : stats) {
+        out << line << "\n";
+    }
+
+    statsFile.close();
+}
+
 void GameWindow::showSolution()
 {
-    // Заглушка - здесь будет отображение решения
-    QMessageBox::information(this, "Решение", "Здесь будет правильное решение");
+    std::pair<bool, QVector<QVector<int>>> answer = HitoriSolver::GetHitoriSolve(boardSize, board);
+
+    if (!answer.first) {
+        QMessageBox::warning(this, "Ошибка", "Не удалось найти решение!");
+        return;
+    }
+
+    QVector<QVector<int>> programSolution = answer.second;
+
+    QList<QPushButton*> buttons = ui->boardWidget->findChildren<QPushButton*>();
+    for (QPushButton* cell : buttons) {
+        cell->setEnabled(false);
+    }
+
+    for (QPushButton* cell : buttons) {
+        int row = cell->property("row").toInt();
+        int col = cell->property("col").toInt();
+
+        if (row >= 0 && row < boardSize && col >= 0 && col < boardSize) {
+            if (programSolution[row][col] == 1) {
+                cell->setStyleSheet(
+                    "QPushButton {"
+                    "  background-color: black;"
+                    "  color: white;"
+                    "  border: 1px solid #555;"
+                    "  font-size: " + QString::number(cellSize / 2) + "px;"
+                                                      "  font-weight: bold;"
+                                                      "  margin: 0px;"
+                                                      "  padding: 0px;"
+                                                      "}"
+                    );
+            } else {
+                cell->setStyleSheet(
+                    "QPushButton {"
+                    "  background-color: white;"
+                    "  color: black;"
+                    "  border: 1px solid #555;"
+                    "  font-size: " + QString::number(cellSize / 2) + "px;"
+                                                      "  font-weight: bold;"
+                                                      "  margin: 0px;"
+                                                      "  padding: 0px;"
+                                                      "}"
+                    );
+            }
+        }
+    }
+
+    // Добавляем QLabel в верхнюю часть layout
+    QGridLayout* gridLayout = qobject_cast<QGridLayout*>(ui->boardWidget->layout());
+    if (gridLayout) {
+        QLabel* solutionLabel = new QLabel("Правильное решение:", ui->boardWidget);
+        solutionLabel->setStyleSheet(
+            "QLabel {"
+            "  color: #333;"
+            "  font-size: 14px;"
+            "  font-weight: bold;"
+            "  margin-bottom: 10px;"
+            "}"
+            );
+        gridLayout->addWidget(solutionLabel, 0, 0, 1, boardSize, Qt::AlignCenter);
+        // Сдвигаем существующие кнопки вниз
+        for (int row = 0; row < boardSize; ++row) {
+            for (int col = 0; col < boardSize; ++col) {
+                QLayoutItem* item = gridLayout->itemAtPosition(row, col);
+                if (item && item->widget()) {
+                    gridLayout->removeItem(item);
+                    gridLayout->addWidget(item->widget(), row + 1, col);
+                }
+            }
+        }
+    }
+
+    ui->surrenderButton->setText("Вернуться в меню");
+    disconnect(ui->surrenderButton, &QPushButton::clicked, this, &GameWindow::onSurrenderClicked);
+    connect(ui->surrenderButton, &QPushButton::clicked, this, [this]() {
+        MainMenu *mainMenu = new MainMenu(username);
+        mainMenu->show();
+        close();
+    });
 }

@@ -11,6 +11,14 @@ AuthDialog::AuthDialog(QWidget *parent) :
     ui->setupUi(this);
     setFixedSize(width(), height());
     ui->passwordEdit->setEchoMode(QLineEdit::Password);
+
+    QPixmap bkgnd("/Users/senior/Desktop/BSUIR/ОАиП/Курсач/Картинки/Окно авторизации.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(palette);
+    this->setAutoFillBackground(true);
+
 }
 
 AuthDialog::~AuthDialog() {
@@ -38,6 +46,27 @@ void AuthDialog::saveUser(const QString &login, const QString &password) {
 
     QTextStream out(&file);
     out << login << ":" << password << "\n";
+    file.close();
+
+    QFile StatFile
+        ("/Users/senior/Desktop/BSUIR/ОАиП/Курсач/Hitori/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/statistics/" + login + ".txt");
+
+    if (!StatFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Не удалось открыть файл для записи!";
+        return;
+    }
+
+    QTextStream statout(&StatFile);
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    statout << "0\n";
+    StatFile.close();
 }
 
 void AuthDialog::on_loginButton_clicked() {

@@ -55,11 +55,32 @@ public:
 
         playButton = new QPushButton(MainMenu);
         playButton->setObjectName("playButton");
+        playButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	font: \"Futura\";   \n"
+"    background-color: #555555;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 6px 12px;\n"
+"    border: 2px solid #555555;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #376130;\n"
+"    border-color: #376130;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #333333;\n"
+"    border-color: #333333;\n"
+"}\n"
+""));
 
         verticalLayout->addWidget(playButton);
 
         uniqueCheckBox = new QCheckBox(MainMenu);
         uniqueCheckBox->setObjectName("uniqueCheckBox");
+        uniqueCheckBox->setStyleSheet(QString::fromUtf8("font: \"Futura\";"));
 
         verticalLayout->addWidget(uniqueCheckBox);
 
@@ -69,6 +90,25 @@ public:
 
         statsButton = new QPushButton(MainMenu);
         statsButton->setObjectName("statsButton");
+        statsButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	font: \"Futura\";   \n"
+"    background-color: #555555;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    border: 2px solid #555555;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #444444;\n"
+"    border-color: #444444;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #333333;\n"
+"    border-color: #333333;\n"
+"}\n"
+""));
 
         verticalLayout->addWidget(statsButton);
 
@@ -78,6 +118,25 @@ public:
 
         exitButton = new QPushButton(MainMenu);
         exitButton->setObjectName("exitButton");
+        exitButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	font: \"Futura\";   \n"
+"    background-color: #555555;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    border: 2px solid #555555;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #fc0330;\n"
+"    border-color: #fc0330;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #333333;\n"
+"    border-color: #333333;\n"
+"}\n"
+""));
 
         verticalLayout->addWidget(exitButton);
 
